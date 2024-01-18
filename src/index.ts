@@ -24,19 +24,22 @@ const getAllLabel = async (url: string) => {
       await client.getLabelDetail(nextPage);
     nextPage = nextPage2;
     data.push(...imageData2);
-    // await sleep(1000);
+    await sleep(1000);
   }
   return data;
 };
 
-const main = async (file: string) => {
+let index = 0;
+const main = async (file: string, start: number) => {
   const labels = await client.getlabelList();
   const data = [];
   try {
-    for (let label of labels.slice(1, 2)) {
+    for (let label of labels.slice(start)) {
       console.log(label);
       const imageData = await getAllLabel(label.link);
       data.push(...imageData);
+      index++;
+      console.log(`已完成${index}/${labels.length}`);
     }
   } catch (error) {
     console.log(error);
@@ -60,4 +63,4 @@ const main = async (file: string) => {
   // fs.writeFileSync(file, JSON.stringify([...data, ...returnData]));
 };
 
-main("data.json");
+main("data.json", 0);
