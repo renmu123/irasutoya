@@ -1,0 +1,49 @@
+{
+  "name": "irasutoya-crawler",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "irasutoya抓取",
+  "homepage": "",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index",
+  "typings": "dist/index",
+  "exports": {
+    ".": {
+      "types": {
+        "default": "./dist/index"
+      },
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "dev": "rollup --config rollup-dev.config.js -w",
+    "build": "rollup --config rollup.config.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "renmu123",
+  "license": "GPLv3",
+  "devDependencies": {
+    "@kineticcafe/rollup-plugin-delete": "3.0.0-beta.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/node": "^18.19.3",
+    "@types/xmldom": "^0.1.34",
+    "axios": "^1.6.3",
+    "p-queue": "^8.0.1",
+    "rollup": "^4.9.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "cheerio": "1.0.0-rc.12",
+    "xmldom": "^0.6.0",
+    "xpath": "^0.0.34"
+  }
+}
