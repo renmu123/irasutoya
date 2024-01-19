@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import axiosRetry from "axios-retry";
 
 import type { AxiosInstance, AxiosProxyConfig } from "axios";
 
@@ -15,6 +16,7 @@ export default class Client {
       },
       proxy: proxy,
     });
+    axiosRetry(instance, { retries: 3 });
     this.request = instance;
   }
   /**
