@@ -16,7 +16,12 @@ export default class Client {
       },
       proxy: proxy,
     });
-    axiosRetry(instance, { retries: 3 });
+    axiosRetry(instance, {
+      retries: 3,
+      retryDelay: retryCount => {
+        return retryCount * 1000;
+      },
+    });
     this.request = instance;
   }
   /**
