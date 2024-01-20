@@ -11,7 +11,7 @@ const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 const getAllLabel = async (url: string) => {
   const data: {
-    label: string;
+    name: string;
     link: string;
     image: string;
     rawImage: string;
@@ -36,7 +36,12 @@ const main = async (file: string, start: number) => {
   try {
     for (let label of labels.slice(start)) {
       console.log(label);
-      const imageData = await getAllLabel(label.link);
+      const imageData = await (
+        await getAllLabel(label.link)
+      ).map(item => ({
+        ...item,
+        label: label.label,
+      }));
       data.push(...imageData);
       index++;
       console.log(`已完成${index}/${labels.length}`);

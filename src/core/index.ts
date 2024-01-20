@@ -55,7 +55,7 @@ export default class Client {
     const $ = cheerio.load(html);
     const items = $(".boxim a");
     const data: {
-      label: string;
+      name: string;
       link: string;
       image: string;
       rawImage: string;
@@ -73,10 +73,10 @@ export default class Client {
       const result = reg.exec(script);
       const rawImage = result[1];
       const image = rawImage.replaceAll("=s72-c", "").replaceAll("/s72-c", "");
-      const label = result[2];
+      const name = result[2];
 
       data.push({
-        label,
+        name,
         link,
         image,
         rawImage,
