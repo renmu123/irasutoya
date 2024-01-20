@@ -24,7 +24,7 @@ program
         }
       } else {
         if (!opts.input) throw new Error("请输入数据文件");
-        downloadImages(opts.input, opts.output);
+        downloadImages(opts.input, opts.output, opts.proxy);
       }
     }
   );
