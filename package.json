@@ -3,23 +3,13 @@
   "version": "0.1.0",
   "type": "module",
   "description": "irasutoya抓取",
-  "homepage": "",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "types": "dist/index",
-  "typings": "dist/index",
-  "exports": {
-    ".": {
-      "types": {
-        "default": "./dist/index"
-      },
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
+  "homepage": "https://github.com/renmu123/irasutoya",
   "bin": {
     "irasutoya": "bin/index.js"
   },
+  "files": [
+    "bin"
+  ],
   "scripts": {
     "dev": "rollup --config rollup-dev.config.js -w",
     "build": "rollup --config rollup-dev.config.js"
