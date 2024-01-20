@@ -29,7 +29,6 @@ const getAllLabel = async (url: string) => {
   return data;
 };
 
-let index = 0;
 const main = async (file: string, start: number) => {
   const labels = await client.getlabelList();
   const data = [];
@@ -68,4 +67,5 @@ const main = async (file: string, start: number) => {
   // fs.writeFileSync(file, JSON.stringify([...data, ...returnData]));
 };
 
-main("data.json", 0);
+let index = 0;
+main("data.json", index);
