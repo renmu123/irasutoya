@@ -5,27 +5,7 @@ import json from "@rollup/plugin-json";
 
 export default [
   {
-    input: "src/index.ts",
-    output: [
-      {
-        file: "dist/index.mjs",
-        format: "es",
-        exports: "named",
-      },
-      {
-        file: "dist/index.cjs",
-        format: "cjs",
-      },
-    ],
-    plugins: [
-      typescript(),
-      nodeResolve({ browser: false }),
-      commonjs(),
-      json(),
-    ],
-  },
-  {
-    input: "src/index.ts",
+    input: "src/command.ts",
     output: [
       {
         file: "index.js",

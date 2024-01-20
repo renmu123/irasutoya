@@ -17,9 +17,12 @@
       "import": "./dist/index.mjs"
     }
   },
+  "bin": {
+    "ira": "index.js"
+  },
   "scripts": {
     "dev": "rollup --config rollup-dev.config.js -w",
-    "build": "rollup --config rollup.config.js"
+    "build": "rollup --config rollup-dev.config.js"
   },
   "engines": {
     "node": ">=18"
@@ -32,6 +35,7 @@
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^18.19.3",
     "@types/xmldom": "^0.1.34",
     "axios": "^1.6.3",
@@ -44,6 +48,8 @@
   "dependencies": {
     "axios-retry": "^4.0.0",
     "cheerio": "1.0.0-rc.12",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
     "xmldom": "^0.6.0",
     "xpath": "^0.0.34"
   }

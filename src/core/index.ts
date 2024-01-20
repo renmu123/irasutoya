@@ -1,3 +1,4 @@
+import fs from "fs-extra";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import axiosRetry from "axios-retry";
@@ -94,5 +95,13 @@ export default class Client {
   async getPage(url: string) {
     const res = await this.request.get(url);
     return res.data;
+  }
+  async downloadImage(url: string, filPath: string) {
+    const response = await this.request({
+      url,
+      method: "GET",
+      responseType: "arraybuffer",
+    });
+    return fs.writeFile(filPath, response.data);
   }
 }

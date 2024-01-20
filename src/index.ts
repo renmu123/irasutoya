@@ -1,21 +1,33 @@
-import fs from "fs";
+import fs from "fs-extra";
 import Client from "./core";
+import { sanitizeFileName } from "./utils";
+import path from "path";
 
-const client = new Client({
-  host: "127.0.0.1",
-  port: 7890,
-  protocol: "http",
-});
+const getClient = (proxy?: string) => {
+  if (!proxy) {
+    return new Client();
+  } else {
+    const url = new URL(proxy);
+    const client = new Client({
+      host: url.hostname,
+      port: Number(url.port),
+      protocol: url.protocol.replace(":", ""),
+    });
+    return client;
+  }
+};
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
-const getAllLabel = async (url: string) => {
+const getAllLabel = async (url: string, proxy?: string) => {
   const data: {
     name: string;
     link: string;
     image: string;
     rawImage: string;
   }[] = [];
+  const client = getClient(proxy);
+
   let { nextPage, imageData } = await client.getLabelDetail(url);
   data.push(...imageData);
   while (nextPage) {
@@ -29,15 +41,20 @@ const getAllLabel = async (url: string) => {
   return data;
 };
 
-const main = async (file: string, start: number) => {
+export const fetchData = async (
+  file: string,
+  start: number,
+  proxy?: string
+) => {
+  const client = getClient(proxy);
   const labels = await client.getlabelList();
   const data = [];
+  let index = start;
+
   try {
     for (let label of labels.slice(start)) {
       console.log(label);
-      const imageData = await (
-        await getAllLabel(label.link)
-      ).map(item => ({
+      const imageData = (await getAllLabel(label.link)).map(item => ({
         ...item,
         label: label.label,
       }));
@@ -55,17 +72,32 @@ const main = async (file: string, start: number) => {
     }
     fs.writeFileSync(file, JSON.stringify([...data, ...oldData]));
   }
-  // const images = await client.getLabelDetail(
-  //   "https://www.irasutoya.com/search/label/%E8%81%B7%E6%A5%AD"
-  // );
-  // console.log(images);
-  // let data = [];
-  // if (fs.existsSync(file)) {
-  //   data = JSON.parse(fs.readFileSync(file).toString());
-  // }
-  // const returnData = await getData(startPage, endPage);
-  // fs.writeFileSync(file, JSON.stringify([...data, ...returnData]));
 };
 
-let index = 0;
-main("data.json", index);
+export const downloadImages = async (
+  file: string,
+  downloadPath: string,
+  proxy?: string
+) => {
+  const client = getClient(proxy);
+  const data = JSON.parse(fs.readFileSync(file).toString());
+  let size = 0;
+  for (let item of data.slice(0, 10)) {
+    const filePath = sanitizeFileName(
+      path.join(downloadPath, item.label, `${item.name}.png`)
+    );
+    await fs.ensureDir(path.dirname(filePath));
+    size++;
+    if (await fs.exists(filePath)) {
+      console.log(`${filePath}已存在`);
+      continue;
+    }
+    console.log(item.image);
+    await client.downloadImage(item.image, filePath);
+    console.log(`下载${filePath}成功`);
+    await sleep(500);
+  }
+};
+
+// main("data.json", 0);
+// downloadImages("data.json", "images");

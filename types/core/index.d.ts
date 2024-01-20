@@ -14,7 +14,7 @@ export default class Client {
      */
     getLabelDetail(url: string): Promise<{
         imageData: {
-            label: string;
+            name: string;
             link: string;
             image: string;
             rawImage: string;
@@ -25,4 +25,5 @@ export default class Client {
      * 获取页面
      */
     getPage(url: string): Promise<any>;
+    downloadImage(url: string, filPath: string): Promise<void>;
 }
