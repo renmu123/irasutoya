@@ -2,6 +2,7 @@ import fs from "fs-extra";
 import axios from "axios";
 import * as cheerio from "cheerio";
 import axiosRetry from "axios-retry";
+import { decodeHtmlEntities } from "../utils";
 
 import type { AxiosInstance, AxiosProxyConfig } from "axios";
 
@@ -73,8 +74,13 @@ export default class Client {
       const reg = /document\.write\(bp_thumbnail_resize\("(.*)","(.*)"\)\)/;
       const result = reg.exec(script);
       const rawImage = result[1];
-      const image = rawImage.replaceAll("=s72-c", "").replaceAll("/s72-c", "");
-      const name = result[2];
+      let image = rawImage;
+      if (image.includes("blogger.googleusercontent.com")) {
+        image = rawImage.replaceAll("s72-c", "s845");
+      } else {
+        image = rawImage.replaceAll("=s72-c", "").replaceAll("/s72-c", "");
+      }
+      const name = decodeHtmlEntities(result[2]);
 
       data.push({
         name,
@@ -101,6 +107,11 @@ export default class Client {
       url,
       method: "GET",
       responseType: "arraybuffer",
+      headers: {
+        referer: "https://www.irasutoya.com/",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
+      },
     });
     return fs.writeFile(filPath, response.data);
   }

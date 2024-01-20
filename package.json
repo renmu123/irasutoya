@@ -1,5 +1,5 @@
 {
-  "name": "irasutoya-crawler",
+  "name": "irasutoya-cli",
   "version": "0.1.0",
   "type": "module",
   "description": "irasutoya抓取",
@@ -18,7 +18,7 @@
     }
   },
   "bin": {
-    "ira": "index.js"
+    "irasutoya": "bin/index.js"
   },
   "scripts": {
     "dev": "rollup --config rollup-dev.config.js -w",
