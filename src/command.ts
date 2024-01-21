@@ -19,11 +19,14 @@ program
       opts: { input: string; output: string; proxy?: string }
     ) => {
       if (url) {
-        if (url.includes("label")) {
+        if (url.includes("search")) {
           downloadLabel(url, opts.output, opts.proxy);
+        } else {
+          throw new Error("暂不支持此url");
         }
       } else {
         if (!opts.input) throw new Error("请输入数据文件");
+
         downloadImages(opts.input, opts.output, opts.proxy);
       }
     }
