@@ -33,14 +33,13 @@
     "rollup": "^4.9.1",
     "rollup-plugin-dts": "^6.1.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
-  },
-  "dependencies": {
+    "typescript": "^5.3.3",
     "axios-retry": "^4.0.0",
     "cheerio": "1.0.0-rc.12",
     "commander": "^11.1.0",
     "fs-extra": "^11.2.0",
     "xmldom": "^0.6.0",
     "xpath": "^0.0.34"
-  }
+  },
+  "dependencies": {}
 }
