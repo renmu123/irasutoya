@@ -2,7 +2,7 @@
   "name": "irasutoya-cli",
   "version": "0.1.0",
   "type": "module",
-  "description": "irasutoya抓取",
+  "description": "irasutoya crawler cli",
   "homepage": "https://github.com/renmu123/irasutoya",
   "bin": {
     "irasutoya": "bin/index.js"
@@ -12,11 +12,21 @@
   ],
   "scripts": {
     "dev": "rollup --config rollup-dev.config.js -w",
-    "build": "rollup --config rollup-dev.config.js"
+    "build": "rollup --config rollup-dev.config.js",
+    "publish": "pnpm publish --access=public"
   },
   "engines": {
     "node": ">=18"
   },
+  "keywords": [
+    "irasutoya",
+    "download",
+    "cli",
+    "axios",
+    "crawler",
+    "下载",
+    "表情包"
+  ],
   "author": "renmu123",
   "license": "GPLv3",
   "devDependencies": {
